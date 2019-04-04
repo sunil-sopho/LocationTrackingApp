@@ -1,5 +1,5 @@
 {
-  "name": "The Deskco",
+  "name": "Deskco",
   "version": "1.0.0",
   "description": "Location Tracking App admin and server side application",
   "main": "app.js",
@@ -27,7 +27,6 @@
     "ejs": "^2.5.7",
     "express": "^4.14.0",
     "express-session": "^1.0.0",
-    "method-override": "^1.0.0",
     "morgan": "^1.7.0",
     "mysql": "^2.14.1",
     "mysql2": "^1.5.1",
