@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<!-- <meta charset="utf-8" Cache-Control: no-cache, must-revalidate> -->
+   <!-- <script src="vendor/jquery-3.2.1.js"></script> -->
+   <!-- google map service call -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWhs_RWjp5s9VREGYo9jgtGFE8qXI7zKY" type="text/javascript"></script>
+
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<!-- custom scripts for various interaction -->
+  <script src="scripts/line.js"></script>
+  <script src="scripts/controls.js"></script>
+  <script src="scripts/requests.js"></script>
+  <script src="scripts/eventListeners.js"></script>
+  <script src="scripts/setter.js"></script>
+  <script src="scripts/fileDownload.js"></script>
+ 
+  <style>
+    *{
+      margin : 0;
+      padding : 0;
+      box-sizing: border-box;
+    }
+    .map-container{
+    position: relative;
+    /*top: 90px;*/
+    height: 100vh;
+    width: 100%;
+    }
+    .name{
+      width:300px;
+    }
+    #sidebar{
+      position: absolute;
+      width: 300px;
+    }
+    .tag {
+    background: #fff;
+    border: 0.2px solid black;
+    margin: 0;
+    padding: 2px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #451C1C;
+    font-family: 'Myriad-Pro', sans-serif;
+    font-weight: 400;
+    font-size: 1.3em;
+  }    
+    #map{
+      height: 100vh;
+      width: 100vw;
+    }
+    #over_map { position: absolute; top: 30px; left: 10px; z-index: 99;
+    width: 280px;height: 220px }
+    #over_map2 { position: absolute; top: 30px; right: 10px; z-index: 99;
+    width: 280px;height: 200px }
+      #over_map3 { position: absolute; top: 30px; left: 45%; z-index: 99;
+    width: 280px;height: 180px ; border:1px solid black;}
+            input[type="text"] {
+             position: relative;
+             display: block;
+             margin : 0 auto;
+             top:10px;
+        }
+  </style>
+  </head>
+  <body>
+ <div class="map-container">
+<!--     <section id="sidebar">
+        <header>False Info</header>
+    </section> -->
+  <div id="map"></div>
+
+
+   <!-- Right side section  -->
+   <div id="over_map2" style="background-color: white;opacity: 0.8;padding: 20px; border-radius:10px;border: 2px solid #327ffc;">
+      <p><input style="display: none;"type="checkbox" id="present" name="present" unchecked> Presentation Mode </p> 
+      <p> Select Type of Proccessing </p>
+      <input type="radio" id="type0" name="type" value="0" checked> Basic<br>
+      <input type="radio" id="type1" name="type" value="1"> Node<br>
+      <input type="radio" id="type2" name="type" value="2"> Link <br>
+      <button onclick="linkErrorDown()"> Error Links </button>
+      <button onclick='healthDown()'> Health Download</button>
+      <button onclick='pirSiteDown()'> Error pir site</button>
+      <!-- <button onclick='pirPopDown()'> Error pir Pop</button> -->
+
+      <!-- <input type="radio" id="kpi3" name="kpi" value="3"> Maximum Active UEs <br> -->
+      <div id='right'></div>
+   </div>
+
+     <div id="over_map" style="background-color: white;opacity: 0.7;padding-top:10px;padding-left: 20px;border-radius:10px;border: 2px solid #327ffc;">
+      <input type="range" style="left: 5px" id="myRange" min="1" max="100" oninput="showVal(this.value)" onchange="showVal(this.value)">
+      <p id="health"> Set Health </p>
+      <input type="range" style="left: 5px" id="limit2" min="0" max="300000" oninput="showVal2(this.value)" onchange="showVal2(this.value)">
+      <p id="limit"> Set Limit </p>
+    <input type="radio" id="kpi0" name="kpi" value="0" checked> S1 Interface<br>
+    <input type="radio" id="kpi1" name="kpi" value="1"> X2 Interface<br>
+    <input type="radio" id="kpi2" name="kpi" value="2"> PDCP_DATA_RATE_MAX_DL <br>
+    <input type="radio" id="kpi3" name="kpi" value="3"> Maximum Active UEs <br>
+    <input type="checkbox" id="fdd" checked> Is FDD<br>
+   </div>
+
+   <div id = "over_map3" style="background-color: white;opacity: 0.7;border-radius:10px;border: 2px solid #327ffc;padding: 20px">
+     <input type="text" id="site" placeholder="Search Site by id" onkeyup="mySite(event)">
+     
+     <input type="text" id="box" placeholder="Enter Max Occupancy Index" onkeyup="mySite1(event)">
+       <input type="text" id="box2" placeholder="Enter PIR" onkeyup="mySite2(event)">
+     <div id='adderTo'></div>
+   </div>
+
+ </div>  
+ <div id="dialog" style="width: 1030px;display: none;"  title="Kpi">
+  <p>Image:</p>
+  <img id="dia" src="http://placehold.it/50x50" alt="Placeholder Image"  style="width: 1000px;height: 500px" />
+
+
+</div>
+  <script src="scripts/map_script.js">
+  </script>
+      
+<!--  Map API integration    -->
+      <script>
+            google.maps.event.addDomListener(window, 'load', initMap);
+      </script>
+    <script src="scripts/MarkerWithLabel.js"></script>
+
+
+  </body>
+</html>

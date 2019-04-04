@@ -5,7 +5,7 @@ var router = express.Router();
 var app = require('../../ApplicationInstance');
 
 // get req
-router.route('/').get(mainController.home);   // for admin login -- No signup process as it's internal and only add users exists
+router.route('/').get(mainController.map);   // for admin login -- No signup process as it's internal and only add users exists
 router.route('/map').get(mainController.map);
 
 
