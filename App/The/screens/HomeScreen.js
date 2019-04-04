@@ -8,13 +8,54 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { WebBrowser,Constants, MapView, Location, Permissions } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
+  };
+
+  // state variable 
+  state = {
+    mapRegion: null,
+    hasLocationPermissions: false,
+    locationResult: null,
+    location:{coords: { latitude: 37.78825, longitude: -122.4324}}
+  };
+  
+  componentDidMount() {
+    this._getLocationAsync();
+  }
+
+  _handleMapRegionChange = mapRegion => {
+    console.log(mapRegion);
+    this.setState({ mapRegion });
+  };
+
+  _getLocationAsync = async () => {
+   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+   if (status !== 'granted') {
+     this.setState({
+       locationResult: 'Permission to access location was denied',
+     });
+   } else {
+     this.setState({ hasLocationPermissions: true });
+   }
+
+   let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true });
+   this.setState({ locationResult: JSON.stringify(location),location });
+   
+    // Center the map on the location we just fetched.
+    this.setState({mapRegion: { latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
+  };
+
+  _handleReset = () => {
+    // let location = await Location.getCurrentPositionAsync({});
+
+    // Center the map on the location we just fetched.
+    this.setState({mapRegion: { latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
   };
 
   render() {
@@ -53,49 +94,82 @@ export default class HomeScreen extends React.Component {
           </View> */}
         </ScrollView>
 
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
 
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+        {
+          this.state.locationResult === null ?
+          <Text>Finding your current location...</Text> :
+          this.state.hasLocationPermissions === false ?
+            <Text>Location permissions are not granted.</Text> :
+            this.state.mapRegion === null ?
+            <Text>Map region doesn't exist.</Text> :
+            <MapView
+              style={{ alignSelf: 'stretch', height: 900 }}
+              showsUserLocation={true}
+              followUserLocation={true}
+              region={ this.state.mapRegion }
+              onRegionChangeComplete={this._handleMapRegionChange}
+              >
+                {/*<MapView.Marker
+                  coordinate={this.state.location.coords}
+                  title="My Marker"
+                  description="Some description"
+                />*/}
+            </MapView>
+        }
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={this._handleReset} style={[styles.bubble, styles.button]}>
+            <Text style={styles.bottomBarContent}>
+              Reset Location
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+
+        <View style={styles.tabBarInfoContainer}>
+          <Text style={styles.tabBarInfoText}>Location: {this.state.locationResult}</Text>
+
+         {/* <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
             <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
+          </View> */}
         </View>
       </View>
     );
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
+// Old helping code for future
 
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
+//   _maybeRenderDevelopmentModeWarning() {
+//     if (__DEV__) {
+//       const learnMoreButton = (
+//         <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
+//           Learn more
+//         </Text>
+//       );
 
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
+//       return (
+//         <Text style={styles.developmentModeText}>
+//           Development mode is enabled, your app will be slower but you can use useful development
+//           tools. {learnMoreButton}
+//         </Text>
+//       );
+//     } else {
+//       return (
+//         <Text style={styles.developmentModeText}>
+//           You are not in development mode, your app will run at full speed.
+//         </Text>
+//       );
+//     }
+//   }
 
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+//   _handleLearnMorePress = () => {
+//     WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
+//   };
+
+//   _handleHelpPress = () => {
+//     WebBrowser.openBrowserAsync(
+//       'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
+//     );
+//   };
 }
 
 const styles = StyleSheet.create({
