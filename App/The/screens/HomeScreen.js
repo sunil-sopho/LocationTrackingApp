@@ -12,6 +12,8 @@ import { WebBrowser,Constants, MapView, Location, Permissions } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
+
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -31,6 +33,7 @@ export default class HomeScreen extends React.Component {
 
   _handleMapRegionChange = mapRegion => {
     console.log(mapRegion);
+  
     this.setState({ mapRegion });
   };
 
@@ -61,8 +64,10 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+          {/*
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          {/*<View style={styles.welcomeContainer}>
+
+          <View style={styles.welcomeContainer}>
             <Image
               source={
                 __DEV__
@@ -91,8 +96,10 @@ export default class HomeScreen extends React.Component {
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
             </TouchableOpacity>
-          </View> */}
+          </View> 
         </ScrollView>
+
+        */}
 
 
         {
@@ -102,8 +109,8 @@ export default class HomeScreen extends React.Component {
             <Text>Location permissions are not granted.</Text> :
             this.state.mapRegion === null ?
             <Text>Map region doesn't exist.</Text> :
-            <MapView
-              style={{ alignSelf: 'stretch', height: 900 }}
+            <MapView 
+                style={{ alignSelf: 'stretch', height: 400 }}
               showsUserLocation={true}
               followUserLocation={true}
               region={ this.state.mapRegion }
