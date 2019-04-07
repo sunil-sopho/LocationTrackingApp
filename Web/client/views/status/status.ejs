@@ -6,7 +6,7 @@
 <!-- <meta charset="utf-8" Cache-Control: no-cache, must-revalidate> -->
    <!-- <script src="vendor/jquery-3.2.1.js"></script> -->
    <!-- google map service call -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWhs_RWjp5s9VREGYo9jgtGFE8qXI7zKY" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWhs_RWjp5s9VREGYo9jgtGFE8qXI7zKY&libraries=places" type="text/javascript"></script>
 
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
@@ -17,6 +17,7 @@
   <script src="scripts/eventListeners.js"></script>
   <script src="scripts/setter.js"></script>
   <script src="scripts/fileDownload.js"></script>
+  <script src="scripts/searchLocation.js"></script>
  
   <style>
     *{
@@ -91,35 +92,38 @@
       <div id='right'></div>
    </div>
 
+   <!-- Left side section  -->    
      <div id="over_map" style="background-color: white;opacity: 0.7;padding-top:10px;padding-left: 20px;border-radius:10px;border: 2px solid #327ffc;">
       <input type="range" style="left: 5px" id="myRange" min="1" max="100" oninput="showVal(this.value)" onchange="showVal(this.value)">
       <p id="health"> Set Health </p>
       <input type="range" style="left: 5px" id="limit2" min="0" max="300000" oninput="showVal2(this.value)" onchange="showVal2(this.value)">
       <p id="limit"> Set Limit </p>
-    <input type="radio" id="kpi0" name="kpi" value="0" checked> S1 Interface<br>
-    <input type="radio" id="kpi1" name="kpi" value="1"> X2 Interface<br>
-    <input type="radio" id="kpi2" name="kpi" value="2"> PDCP_DATA_RATE_MAX_DL <br>
-    <input type="radio" id="kpi3" name="kpi" value="3"> Maximum Active UEs <br>
-    <input type="checkbox" id="fdd" checked> Is FDD<br>
+    <input type="radio" id="mode0" name="mode" value="0" checked> Normal <br>
+    <input type="radio" id="mode1" name="mode" value="1"> Task <br>
+    <input type="radio" id="mode2" name="mode" value="2"> Report <br>
+    <!-- <input type="radio" id="kpi3" name="mode" value="3"> Maximum Active UEs <br> -->
+    <!-- <input type="checkbox" id="fdd" checked> Is FDD<br> -->
    </div>
 
+   <!-- Center section  For Place search and secondy options -->
    <div id = "over_map3" style="background-color: white;opacity: 0.7;border-radius:10px;border: 2px solid #327ffc;padding: 20px">
-     <input type="text" id="site" placeholder="Search Site by id" onkeyup="mySite(event)">
+     <input type="text" id="location" placeholder="Search Location " onkeyup="mySite(event)">
      
      <input type="text" id="box" placeholder="Enter Max Occupancy Index" onkeyup="mySite1(event)">
        <input type="text" id="box2" placeholder="Enter PIR" onkeyup="mySite2(event)">
      <div id='adderTo'></div>
    </div>
 
+
+
  </div>  
  <div id="dialog" style="width: 1030px;display: none;"  title="Kpi">
   <p>Image:</p>
   <img id="dia" src="http://placehold.it/50x50" alt="Placeholder Image"  style="width: 1000px;height: 500px" />
-
-
 </div>
-  <script src="scripts/map_script.js">
-  </script>
+
+
+  <script src="scripts/map_script.js">  </script>
       
 <!--  Map API integration    -->
       <script>
