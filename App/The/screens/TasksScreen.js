@@ -25,11 +25,11 @@ export default class LinksScreen extends React.Component {
   };
 
   _handleTaskClick = () =>{
-    console.log("Key Pressed")
+    console.log("Task Pressed")
   }
 
-  _onPressButton = () =>{
-
+  _handleInfoClick = () =>{
+    console.log("Info Pressed")
   }
 
   componentDidMount(){
@@ -50,6 +50,12 @@ export default class LinksScreen extends React.Component {
       });
   }
 
+  state1 = {
+    tasks : [{
+      id : 1, title : "Task 1", latitude : 29.545004, longitude : 78.19049, convergence : 0.01, create_time : 10, description : "This is task 1"
+    }]  
+  };
+
   render() {
 
     if(this.state.isLoading){
@@ -67,7 +73,7 @@ export default class LinksScreen extends React.Component {
            * content, we just wanted to provide you with some helpful links */}
      <View >
         <FlatList
-          data = {this.state.dataSource}
+          data = {this.state1.tasks}
           renderItem={({item}) => {
               return(
                 <View >
@@ -76,8 +82,8 @@ export default class LinksScreen extends React.Component {
                 </TouchableHighlight>
                      <Button
                       s
-                      onPress={() =>  this._onPressButton}
-                      title="Learn More"
+                      onPress={() =>  this._handleInfoClick()}
+                      title={item.description}
                       color="#841584"
                       accessibilityLabel="Learn more about this purple button"
                     />
@@ -85,7 +91,7 @@ export default class LinksScreen extends React.Component {
               )
             }
           }
-          keyExtractor={({id}, index) => id}
+          keyExtractor={item => item.id.toString()}
         />
       </View>
       </ScrollView>

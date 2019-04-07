@@ -24,7 +24,23 @@ export default class HomeScreen extends React.Component {
     mapRegion: null,
     hasLocationPermissions: false,
     locationResult: null,
-    location:{coords: { latitude: 37.78825, longitude: -122.4324}}
+    location:{coords: { latitude: 37.78825, longitude: -122.4324}},
+    tasks: [{
+      id: 0,
+      title: 'hello',
+      coordinates: {
+        latitude: 3.148561,
+        longitude: 101.652778
+      },
+    },
+    {
+      id: 1,
+      title: 'hello',
+      coordinates: {
+        latitude : 28.52489629156801, 
+        longitude : 77.191514796065
+      },  
+    }]
   };
   
   componentDidMount() {
@@ -121,6 +137,13 @@ export default class HomeScreen extends React.Component {
                   title="My Marker"
                   description="Some description"
                 />*/}
+                {this.state.tasks.map(marker => (
+                  <MapView.Marker key={marker.id}
+                    coordinate={marker.coordinates}
+                    title={marker.title}
+                    
+                  />
+                ))}
             </MapView>
         }
         <View style={styles.buttonContainer}>
