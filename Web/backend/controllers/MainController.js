@@ -1,6 +1,9 @@
 
 //  @sunil after view of DB is Final then handle this
-// var database = require('../Models/db_model');
+var database = require('../Models/db_model');
+var database = require('../Models/task');
+var database = require('../Models/user');
+var database = require('../Models/worker');
 
 
 var request = require('request');
