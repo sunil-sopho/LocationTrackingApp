@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     ScrollView, StyleSheet,
+    ActivityIndicator,
 } from 'react-native'
 import { ExpoLinksView } from '@expo/samples';
 
@@ -18,6 +19,11 @@ export default class LinksScreen extends React.Component {
     title: 'Tasks',
   };
 
+  state = {
+    isLoading : true,
+    dataSource: null
+  };
+
   _handleTaskClick = () =>{
     console.log("Key Pressed")
   }
@@ -26,27 +32,47 @@ export default class LinksScreen extends React.Component {
 
   }
 
+  componentDidMount(){
+    return fetch("https://facebook.github.io/react-native/movies.json")
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.movies,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+
   render() {
-    return (
+
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
+
+
+  return (
       <ScrollView style={styles.container}>
         {/* Go ahead and delete ExpoLinksView and replace it with your
            * content, we just wanted to provide you with some helpful links */}
      <View >
         <FlatList
-          data={[
-            {title: 'Title Text',key: 'Task 1'},
-            {key: 'Task 2'},
-            {key: 'Task 3'},
-            {key: 'Task 4'},
-            {key: 'Task 5'},
-            {key: 'Task 6'},
-            {key: 'Task 7'},
-          ]}
+          data = {this.state.dataSource}
           renderItem={({item}) => {
               return(
                 <View >
                 <TouchableHighlight onPress={() => this._handleTaskClick()} style={styles.TaskLink}>
-                     <Text style={styles.TaskText}>{item.key}</Text>
+                     <Text style={styles.TaskText}>{item.title}</Text>
                 </TouchableHighlight>
                      <Button
                       s
@@ -59,11 +85,13 @@ export default class LinksScreen extends React.Component {
               )
             }
           }
+          keyExtractor={({id}, index) => id}
         />
       </View>
       </ScrollView>
     );
   }
+  
 }
 
 
