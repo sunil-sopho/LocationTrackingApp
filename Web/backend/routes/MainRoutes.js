@@ -12,7 +12,8 @@ router.route('/users').get(mainController.user);
 
 
 // post req
-// router.route('/map').post(mainController.post);
+router.route('/getUserList').post(mainController.userList);
+router.route('/usrCreate').post(mainController.userCreate);
 
 
 

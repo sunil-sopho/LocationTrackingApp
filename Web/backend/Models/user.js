@@ -29,7 +29,8 @@ var User = sequelize.define('users', {
     },
     permission:{
         type:   Sequelize.ENUM,
-        values: ['admin', 'worker', 'web']
+        values: ['admin', 'worker', 'web'],
+        defaultValue: 'worker'
     },
     uid:{
         type: Sequelize.INTEGER,
