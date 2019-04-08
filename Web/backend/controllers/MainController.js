@@ -10,8 +10,10 @@ var request = require('request');
 module.exports = {
     home:home,
     map:map,
+    user:user,
     loginPost:loginPost,
-    signupPost:signupPost
+    signupPost:signupPost,
+
 }
 
 // For login Purpose
@@ -31,11 +33,11 @@ function map(req,res){
 
 
 
-// function signup(req,res){
-//     res.render('signup/signup.ejs',{
-//       message:""
-//   });
-// }
+function user(req,res){
+    res.render('users/users.ejs',{
+      message:""
+  });
+}
 
 
 
