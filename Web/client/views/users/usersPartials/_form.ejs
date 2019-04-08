@@ -1,0 +1,92 @@
+<style>
+/* Split the screen in half */
+.split {
+  height: 100%;
+  width: 85%;
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.right {
+  right: 0;
+  text-align: center;
+
+}
+
+.right input {
+margin: 0 auto; 
+width:250px;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  padding-top:  50px;
+  /*position: absolute;*/
+  /*top: 50%;*/
+  /*left: 50%;*/
+  transform: translate(-50%, -50%);
+}
+</style>
+
+
+
+<div class="split right " style="">
+<!-- <div class="centered">  -->
+  <form>
+    <!-- <div class="form-row"> -->
+      <div class="col-md-16 mb-3">
+        <label for="validationServer01">First name</label>
+        <input type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" value="" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-16 mb-3">
+        <label for="validationServer02">Last name</label>
+        <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Last name" value="" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-2 mb-3" style="justify-content: center;left: 41.5%">
+        <label for="validationServerUsername">Username / Id </label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend3">@</span>
+          </div>
+          <input type="text" class="form-control is-invalid" id="validationServerUsername" placeholder="Username"  required>
+          <div class="invalid-feedback">
+            Please choose a username.
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+    <!-- <div class="form-row"> -->
+      <div class="col-md-16 mb-3">
+        <label for="validationServer03">Permission Level :</label>
+          <select name="permission" id="validationServer03">
+            <option value="admin">Admin</option>
+            <option value="worker">Worker</option>
+          </select>
+      </div>
+      <div class="col-md-16 mb-3">
+        <label for="validationServer04">Password </label>
+        <input type="Password" class="form-control is-invalid" id="validationServer04" placeholder="Password" required>
+        <div class="invalid-feedback">
+          Please Provide a valid Password
+        </div>
+      </div>
+<!--       <div class="col-md-3 mb-3">
+        <label for="validationServer05">Zip</label>
+        <input type="text" class="form-control is-invalid" id="validationServer05" placeholder="Zip" required>
+        <div class="invalid-feedback">
+          Please provide a valid zip.
+        </div>
+      </div> -->
+    <!-- </div> -->
+     <button class="btn btn-primary" type="submit">Submit form</button>
+  </form>
+<!-- </div> -->
+</div>
