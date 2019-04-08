@@ -17,6 +17,7 @@ module.exports = {
 // For login Purpose
 function home(req,res){
 	res.render('index.ejs',{
+      user: req.session.user,
       message:""
 	});
 }
