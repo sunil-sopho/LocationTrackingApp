@@ -16,6 +16,9 @@ var allTasks = {tasks: [{
       },  
       description: "This is task."
     }],
-	newtasks: [0],}
+	newtasks: [0],
+	goToTasks: [-1],
+}
+
 console.log(allTasks)
 exports.tasks = allTasks;

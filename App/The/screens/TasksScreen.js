@@ -24,8 +24,13 @@ export default class LinksScreen extends React.Component {
     mytasks: tasks
   };
 
-  _handleTaskClick = () =>{
+  _handleTaskClick = (itemId) =>{
     console.log("Task Pressed")
+    // Map._setLocationToTask();
+    tasks.goToTasks[0] = itemId;
+    console.log(tasks.goToTasks[0])
+    this.props.navigation.navigate("Map", {taskId: itemId} )
+    // tasks.newtasks[0] = 1;
   }
 
   _handleInfoClick = () =>{
@@ -54,13 +59,13 @@ export default class LinksScreen extends React.Component {
       },
       description: "This is task2"
     })
-    console.log(this.state.mytasks.newtasks[0]);
     tasks.newtasks[0] = 1;
-    // this.setState({mytasks.newtasks : 1})
-    console.log("new Task :")
-    console.log(this.state.mytasks.newtasks[0]);
-    // {tasks.newtasks : true}
-    return fetch("https://facebook.github.io/react-native/movies.json")
+    var tid = setInterval(() => this._getTasks(), 1000)
+
+  }
+
+  _getTasks = async () => {
+    fetch("https://facebook.github.io/react-native/movies.json")
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -110,7 +115,7 @@ export default class LinksScreen extends React.Component {
           renderItem={({item}) => {
               return(
                 <View >
-                <TouchableHighlight onPress={() => this._handleTaskClick()} style={styles.TaskLink}>
+                <TouchableHighlight onPress={() => this._handleTaskClick(item.id)} style={styles.TaskLink}>
                      <Text style={styles.TaskText}>{item.title}</Text>
                 </TouchableHighlight>
                      <Button

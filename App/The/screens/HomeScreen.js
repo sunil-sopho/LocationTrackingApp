@@ -37,7 +37,7 @@ export default class HomeScreen extends React.Component {
   componentDidMount() {
     // this._getT()
     this._getLocationAsync();
-    // setTimeout(_sendLocation, 5000);
+    // var _setLocationId = setInterval(this._sendLocation, 5000);
 
     // this._getT()
 
@@ -75,6 +75,10 @@ export default class HomeScreen extends React.Component {
     this.setState({mapRegion: { latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
   };
 
+  _setLocationToTask = () => {
+    console.log("IT is working");
+  }
+
   _handleReset = () => {
     // let location = await Location.getCurrentPositionAsync({});
 
@@ -106,20 +110,49 @@ export default class HomeScreen extends React.Component {
     
   // }
 
-  _update_states = async () => {
-    console.log(this.state.mytasks.newtasks[0])
+  _update_states = () => {
+    // console.log(this.state.mytasks.newtasks[0])
     if(tasks.newtasks[0] === 1){
       tasks.newtasks[0] = 0;
       this.setState({random_shit: "Again nothing", mapRegion : this.state.mapRegion})
     }
+    // console.log(tasks.goToTasks[0])
+
+    if(tasks.goToTasks[0] !== -1){
+      var curr_task = tasks.goToTasks[0];
+      console.log(curr_task)
+      this.setState({random_shit: "Again nothing", mapRegion : {latitude: tasks.tasks[curr_task].coordinates.latitude, longitude: tasks.tasks[curr_task].coordinates.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
+      tasks.goToTasks[0] = -1;
+    }
   }
+
+  _changeLocation = (taskId) => {
+    if(taskId != -1){
+      console.log(taskId);
+      var curr_task = tasks.tasks[taskId];
+      this.setState({mapRegion: {latitude: curr_task.coordinates.latitude, longitude: curr_task.coordinates.longitude}});
+    }
+  }
+
 
   render() {
     var intervalID = setInterval(this._update_states, 1000);
     // setTimeout(this._update_states, 1000)
 
     let markers = this.state.mytasks.tasks || [];
-  
+    
+    const { navigation } = this.props;
+    var taskId = navigation.getParam('taskId', -1)
+    // this._changeLocation(taskId)
+
+    // if(taskId !== -1){
+    //   console.log(taskId);
+    //   var curr_task = tasks.tasks[taskId];
+    //   this.setState({mapRegion: {latitude: curr_task.coordinates.latitude, longitude: curr_task.coordinates.longitude}});
+    //   taskId = -1;
+    // }
+
+
     return (
 
       <View style={styles.container}>
