@@ -8,8 +8,7 @@ import TasksScreen from '../screens/TasksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-  Tasks: TasksScreen,
+  Home: {screen: HomeScreen},
 });
 
 HomeStack.navigationOptions = {

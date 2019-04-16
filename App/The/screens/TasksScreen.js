@@ -10,8 +10,8 @@ import {
     ActivityIndicator,
 } from 'react-native'
 import { ExpoLinksView } from '@expo/samples';
-
-
+var tasks = require('../constants/allTasks')
+tasks = tasks.tasks;
 data = {}
 
 export default class LinksScreen extends React.Component {
@@ -21,7 +21,7 @@ export default class LinksScreen extends React.Component {
 
   state = {
     isLoading : true,
-    dataSource: null
+    mytasks: tasks
   };
 
   _handleTaskClick = () =>{
@@ -29,10 +29,37 @@ export default class LinksScreen extends React.Component {
   }
 
   _handleInfoClick = () =>{
-    console.log("Info Pressed")
+    console.log("Info Pressed");
   }
 
+    // update task in tasks
+    // // tasks[0] = 10;
+    // tasks.tasks.push({
+    //   id: 2,
+    //   title: 'hello2',
+    //   coordinates: {
+    //     latitude: 3.148561,
+    //     longitude: 101.652778
+    //   },
+    //   description: "This is task2"
+    // })
+
   componentDidMount(){
+    this.state.mytasks.tasks.push({
+      id: 2,
+      title: 'hello2',
+      coordinates: {
+        latitude : 28.54589629156801, 
+        longitude : 77.190514796065
+      },
+      description: "This is task2"
+    })
+    console.log(this.state.mytasks.newtasks[0]);
+    tasks.newtasks[0] = 1;
+    // this.setState({mytasks.newtasks : 1})
+    console.log("new Task :")
+    console.log(this.state.mytasks.newtasks[0]);
+    // {tasks.newtasks : true}
     return fetch("https://facebook.github.io/react-native/movies.json")
       .then((response) => response.json())
       .then((responseJson) => {
@@ -50,11 +77,17 @@ export default class LinksScreen extends React.Component {
       });
   }
 
-  state1 = {
-    tasks : [{
-      id : 1, title : "Task 1", latitude : 29.545004, longitude : 78.19049, convergence : 0.01, create_time : 10, description : "This is task 1"
-    }]  
-  };
+  // state1 = {
+  //   tasks : [{
+  //     id: 0,
+  //     title: 'hello',
+  //     coordinates: {
+  //       latitude : 28.57489629156801, 
+  //       longitude : 77.161514796065
+  //     },  
+  //     description: "This is task 1"
+  //   }]  
+  // };
 
   render() {
 
@@ -73,7 +106,7 @@ export default class LinksScreen extends React.Component {
            * content, we just wanted to provide you with some helpful links */}
      <View >
         <FlatList
-          data = {this.state1.tasks}
+          data = {tasks.tasks}
           renderItem={({item}) => {
               return(
                 <View >

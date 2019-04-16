@@ -11,7 +11,9 @@ import {
 import { WebBrowser,Constants, MapView, Location, Permissions } from 'expo';
 
 import { MonoText } from '../components/StyledText';
-
+// import allTasks from '../constants/allTasks';
+var tasks = require('../constants/allTasks')
+tasks = tasks.tasks;
 
 
 export default class HomeScreen extends React.Component {
@@ -25,30 +27,33 @@ export default class HomeScreen extends React.Component {
     hasLocationPermissions: false,
     locationResult: null,
     location:{coords: { latitude: 37.78825, longitude: -122.4324}},
-    tasks: [{
-      id: 0,
-      title: 'hello',
-      coordinates: {
-        latitude: 3.148561,
-        longitude: 101.652778
-      },
-    },
-    {
-      id: 1,
-      title: 'hello',
-      coordinates: {
-        latitude : 28.52489629156801, 
-        longitude : 77.191514796065
-      },  
-    }]
+    mytasks: tasks,
+    random_shit : "nothing",
+    printer: []
   };
-  
+
+
+
   componentDidMount() {
+    // this._getT()
     this._getLocationAsync();
+    // setTimeout(_sendLocation, 5000);
+
+    // this._getT()
+
+  }
+
+  _sendLocation = async () => {
+    fetch("URL", {
+       method: "POST",
+       headers: headers,
+       body:  JSON.stringify(this.state.location.coords),
+    })
   }
 
   _handleMapRegionChange = mapRegion => {
     console.log(mapRegion);
+    // this._getT()
   
     this.setState({ mapRegion });
   };
@@ -77,8 +82,46 @@ export default class HomeScreen extends React.Component {
     this.setState({mapRegion: { latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
   };
 
+
+
+  // _updateState = async() => {
+  //   // while(true) {
+  //     // this._handleReset();
+  //     // this.setState({mytasks : tasks.tasks})
+  //       this.setState({random_shit : "again_nothing"})    // }
+  // }
+
+  // _getTasks(){
+  //   let temptask = this.props.navigation.getParam(Task, null);
+  //   if(temptask !== null) {tasks: this.state.tasks.concat([temptask])}
+  //   console.log("Inside getTasks");
+  // };
+  
+  // _getT(){
+  //   for(var i=0;i<2;i++){
+  //     console.log(tasks[i])
+  //       {printer: this.state.printer.concat([<Text> {tasks[i]} </Text>])}
+  //   }
+  //   tasks[0]=5;
+    
+  // }
+
+  _update_states = async () => {
+    console.log(this.state.mytasks.newtasks[0])
+    if(tasks.newtasks[0] === 1){
+      tasks.newtasks[0] = 0;
+      this.setState({random_shit: "Again nothing", mapRegion : this.state.mapRegion})
+    }
+  }
+
   render() {
+    var intervalID = setInterval(this._update_states, 1000);
+    // setTimeout(this._update_states, 1000)
+
+    let markers = this.state.mytasks.tasks || [];
+  
     return (
+
       <View style={styles.container}>
           {/*
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -137,11 +180,11 @@ export default class HomeScreen extends React.Component {
                   title="My Marker"
                   description="Some description"
                 />*/}
-                {this.state.tasks.map(marker => (
+                {markers.map(marker => (
                   <MapView.Marker key={marker.id}
                     coordinate={marker.coordinates}
                     title={marker.title}
-                    
+                    description={marker.description}
                   />
                 ))}
             </MapView>
@@ -152,9 +195,9 @@ export default class HomeScreen extends React.Component {
               Reset Location
             </Text>
           </TouchableOpacity>
+
         </View>
-
-
+        
         <View style={styles.tabBarInfoContainer}>
           <Text style={styles.tabBarInfoText}>Location: {this.state.locationResult}</Text>
 
